@@ -57,7 +57,8 @@ def test_2():
             # pass by reference.
             image.flags.writeable = False
             image = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
-            results = hands.process(image)
+            results = hands.process(image) #contiene una o mas manos
+            print("index_test= ", results.multi_hand_landmarks[0].landmark[8])
 
             # Draw the hand annotations on the image.
             image.flags.writeable = True
@@ -70,6 +71,8 @@ def test_2():
                         mp_hands.HAND_CONNECTIONS,
                         mp_drawing_styles.get_default_hand_landmarks_style(),
                         mp_drawing_styles.get_default_hand_connections_style())
+                    
+                    print("INDEX_FINGER_TIP coordinates= ", hand_landmarks.landmark[8])
             
             # Flip the image horizontally for a selfie-view display.
             cv2.imshow('MediaPipe Hands', cv2.flip(image, 1))
