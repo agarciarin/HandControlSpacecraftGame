@@ -5,12 +5,6 @@ def test():
     talpha.test_2()
 
 
-
-def main():
-    print("hola")
-
-    
-
 if __name__ == "__main__":
     #test()
     main()
