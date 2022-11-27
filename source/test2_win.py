@@ -4,13 +4,15 @@ import random
 import time
 import pyautogui
 
+import test_alpha.test_alpha1 as talpha
+
 import neat
 import pygame
 import visualize
 pygame.font.init()  # init font
 
 
-def main():
+def main(cap, hands, mp_hands, mp_drawing_styles, mp_drawing):
     WIN_WIDTH = 1800
     WIN_HEIGHT = 980
     FLOOR = 730
@@ -59,16 +61,26 @@ def main():
     #loop game
     while True:
         #x, y = pygame.mouse.get_pos()
+        #xy = talpha.test_3(cap, hands, mp_hands, mp_drawing_styles, mp_drawing)
+        x, y = talpha.test_3(cap, hands, mp_hands, mp_drawing_styles, mp_drawing)
+        #print("xy", type(xy))
+        if x >= 0 and x <= 1:
+            x1 = x*500
+            y1 = y*500
+        else:
+            x1 = 200
+            y1 = 200
 
-        x, y = pyautogui.position()
+
+        #x1, y1 = pyautogui.position()
         #time.sleep(1)
-        #print("x=", x, ", y=", y)
+        print("x1", x1, "y1", y1)
 
-        bird1 = Bird(x-100, y-100)
+        bird1 = Bird(x1, y1)
         draw_window(WIN, bird1)
 
-
+"""
 if __name__ == "__main__":
     main()
-
+"""
 
