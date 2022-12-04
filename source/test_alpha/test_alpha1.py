@@ -100,7 +100,8 @@ def test_3(cap, hands, mp_hands, mp_drawing_styles, mp_drawing):
     # Draw the hand annotations on the image.
     image.flags.writeable = True
     image = cv2.cvtColor(image, cv2.COLOR_RGB2BGR)
-    cv2.imshow('MediaPipe Hands', cv2.flip(image, 1)) #mostrar pantalla de camara
+    
+    #cv2.imshow('MediaPipe Hands', cv2.flip(image, 1)) #mostrar pantalla de camara
     if results.multi_hand_landmarks:
         for hand_landmarks in results.multi_hand_landmarks:
             mp_drawing.draw_landmarks(
@@ -111,13 +112,13 @@ def test_3(cap, hands, mp_hands, mp_drawing_styles, mp_drawing):
                 mp_drawing_styles.get_default_hand_connections_style())
 
             #return hand_landmarks.landmark[8]
+            print("Coord", hand_landmarks.landmark[8])
             return hand_landmarks.landmark[8].x, hand_landmarks.landmark[8].y
-            #print("Coord", hand_landmarks.landmark[8])
             #time.sleep(1)
     else:
         return 5, 5
     
     # Flip the image horizontally for a selfie-view display.
-    
+
     #if cv2.waitKey(5) & 0xFF == 27:
     #    break
