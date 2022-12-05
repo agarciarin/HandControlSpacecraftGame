@@ -5,8 +5,8 @@ import pygame
 import utils.setup as sp
 import utils.load_images as img
 from hands_detection.hand_detect import hand_cap
-import class_spacecraft.spacecraft as spcraft
-import class_window.window as windo
+from class_spacecraft.spacecraft import Spacecraft
+import class_spacecraft.window as windo
 
 
 
@@ -74,10 +74,10 @@ def main():
             """
            
 
-            spcft_1 = spcraft(x1, y1, scaled_spcft_img)
+            spcft_1 = Spacecraft(x1, y1, scaled_spcft_img)
             #aster_1 = 
 
-            windo.draw(WIN, spcft_1)
+            windo.Window.draw(WIN, spcft_1)
             
 
 

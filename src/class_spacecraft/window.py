@@ -1,4 +1,5 @@
 import pygame
+from class_spacecraft.spacecraft import Spacecraft
 
 
 
@@ -9,11 +10,18 @@ class Window:
         self.w = w
         self.bg = imag
 
-    def draw(self, win, spcft, aster):
+    def draw(self, win, spcft: Spacecraft):
+
         win.blit(self.bg, (0,0))
         spcft.draw(win)
 
         pygame.display.update()
 
 
+"""
+def draw(self, win, spcft):
+    win.blit(self.bg, (0,0))
+    spcft.draw(win)
 
+    pygame.display.update()
+"""
