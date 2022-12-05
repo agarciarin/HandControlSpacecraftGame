@@ -1,13 +1,14 @@
 import cv2
 import mediapipe as mp
+import pyautogui
 import pygame
+import numpy as np
 
-import utils.setup as sp
 import utils.load_images as img
-from hands_detection.hand_detect import hand_cap
-from class_spacecraft.spacecraft import Spacecraft
-import class_spacecraft.window as windo
-
+import utils.setup as sp
+from classes.spacecraft import Spacecraft
+from classes.window import Window
+from hands_detection.hand_detect import hand_cap, ListCoord
 
 
 def main():
@@ -31,17 +32,17 @@ def main():
         #load images
         spcft, aster, bg, exp = img.load_imag()
         
-        WIN = pygame.display.set_mode((sp.WIN_WIDTH, sp.WIN_HEIGHT))
-        pygame.display.set_caption("Spacecraft game")
-
-        N = 5
-        past_values = []
-        weighted_avg_denominator = sum(range(1, N+1))
+        spacecraft = Spacecraft(0.5, 0.5, spcft)
+        window = Window(sp.WIN_WIDTH, sp.WIN_HEIGHT, bg)
+        window.update(spacecraft)
+        
+        ListCoord(sp.N_FILTER)
 
         #game loop
         while True:
-            x, y, z = hand_cap(cap, hands, mp_hands, mp_drawing_styles, mp_drawing)
+            vect = hand_cap(cap, hands, mp_hands, mp_drawing_styles, mp_drawing)
 
+            """
             print("vect=", x)
             print("type", type(x))
 
@@ -57,27 +58,51 @@ def main():
             z_smooth = sum([z * (i+1) for i, (x, y, z) in enumerate(past_values)]) / weighted_avg_denominator
             # update the position of the bird using the smoothed coordinates
             #x, y, z = x_smooth, y_smooth, z_smooth
-
+            
             
             
             x1 = (-x_smooth+1)*sp.WIN_WIDTH
             y1 = y_smooth*sp.WIN_HEIGHT
             scaled_spcft_img = pygame.transform.scale(spcft, (sp.SPCRFT_W0*(0.7-z_smooth*3), sp.SPCRFT_H0*(0.7-z_smooth*3)))
-                
+            """
+            
+            
             """
             if x >= 0 and x <= 1:
                 x1 = (1-x)*sp.WIN_WIDTH
                 y1 = y*sp.WIN_HEIGHT
+                z1 = z
             else:
                 x1 = 200
                 y1 = 200
+                z1 = 1
             """
-           
 
-            spcft_1 = Spacecraft(x1, y1, scaled_spcft_img)
+            """
+            #from mouse cursor
+            x1, y1 = pyautogui.position()
+            print("x1", x1, "y1", y1)
+            z1 = 1
+            if x1 >= 0 and x1 <= sp.WIN_WIDTH:
+                x2 = x1
+                y2 = y1
+            else:
+                x2 = 200
+                y2 = 200
+                
+            """
+
             #aster_1 = 
+            spacecraft.update(vect[0], vect[1], vect[2])
+            window.update(spacecraft)
 
-            windo.Window.draw(WIN, spcft_1)
+            """
+            to-do
+            if
+                break
+            """
+
+
             
 
 
@@ -94,7 +119,10 @@ def main():
 
 
 if __name__ == "__main__":
-    main()
+    #main()
 
 
-
+    aa = ListCoord(5)
+    print(type(aa))
+    print(aa)
+    

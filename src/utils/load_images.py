@@ -2,56 +2,32 @@ import pygame
 import os
 from numpy import empty
 from random import randint
+from utils.setup import WIN_HEIGHT, WIN_WIDTH, SPCRAFT_W0, SPCRAFT_H0
 
 
 
 # load images: spacecrafts, asteroids, background, explosion
-def load_imag(): 
+def load_imag():     
     
     N_spcft = 5
-    N_aster = 7
     N_bg = 14
+    N_aster = 7
 
-    spcft = empty([N_spcft], dtype=pygame.Surface)
-    aster = empty([N_aster], dtype=pygame.Surface)
-    bg = empty([N_bg], dtype=pygame.Surface)
+    #only return one spacecraft and one background
+    a = randint(1, N_spcft)
+    b = randint(1, N_bg)
 
-    spcft[0] = pygame.image.load(os.path.join("doc/images/spacecraft/iss.png"))
-    spcft[1] = pygame.image.load(os.path.join("doc/images/spacecraft/soyuz.png"))
-    spcft[2] = pygame.image.load(os.path.join("doc/images/spacecraft/space_shuttle.png"))
-    spcft[3] = pygame.image.load(os.path.join("doc/images/spacecraft/spaceX_dragon.png"))
-    spcft[4] = pygame.image.load(os.path.join("doc/images/spacecraft/starman.png"))
+    aster_imag = empty([N_aster], dtype=pygame.Surface)
 
-    aster[0] = pygame.image.load(os.path.join("doc/images/asteroid/asteroid_1.png"))
-    aster[1] = pygame.image.load(os.path.join("doc/images/asteroid/asteroid_2.png"))
-    aster[2] = pygame.image.load(os.path.join("doc/images/asteroid/asteroid_3.png"))
-    aster[3] = pygame.image.load(os.path.join("doc/images/asteroid/asteroid_4.png"))
-    aster[4] = pygame.image.load(os.path.join("doc/images/asteroid/asteroid_5.png"))
-    aster[5] = pygame.image.load(os.path.join("doc/images/asteroid/asteroid_6.png"))
-    aster[6] = pygame.image.load(os.path.join("doc/images/asteroid/asteroid_7.png"))
+    spacecraft_imag = pygame.transform.scale( pygame.image.load(os.path.join("doc/images/spacecraft/spa_" + str(a) + ".png")), (SPCRAFT_W0, SPCRAFT_H0) )
+    bg_imag  = pygame.transform.scale( pygame.image.load(os.path.join("doc/images/background/bg_" + str(b) + ".jpg")), (WIN_WIDTH, WIN_HEIGHT) )
+    exp_imag = pygame.transform.scale( pygame.image.load(os.path.join("doc/images/spacecraft/explosion.png")), (SPCRAFT_W0, SPCRAFT_H0))
+    aster_imag[0] = pygame.image.load(os.path.join("doc/images/asteroid/asteroid_1.png"))
+    aster_imag[1] = pygame.image.load(os.path.join("doc/images/asteroid/asteroid_2.png"))
+    aster_imag[2] = pygame.image.load(os.path.join("doc/images/asteroid/asteroid_3.png"))
+    aster_imag[3] = pygame.image.load(os.path.join("doc/images/asteroid/asteroid_4.png"))
+    aster_imag[4] = pygame.image.load(os.path.join("doc/images/asteroid/asteroid_5.png"))
+    aster_imag[5] = pygame.image.load(os.path.join("doc/images/asteroid/asteroid_6.png"))
+    aster_imag[6] = pygame.image.load(os.path.join("doc/images/asteroid/asteroid_7.png"))
 
-    bg[0]  = pygame.image.load(os.path.join("doc/images/background/bg_1.jpg"))
-    bg[1]  = pygame.image.load(os.path.join("doc/images/background/bg_2.jpg"))
-    bg[2]  = pygame.image.load(os.path.join("doc/images/background/bg_3.jpg"))
-    bg[3]  = pygame.image.load(os.path.join("doc/images/background/bg_4.jpg"))
-    bg[4]  = pygame.image.load(os.path.join("doc/images/background/bg_5.jpg"))
-    bg[5]  = pygame.image.load(os.path.join("doc/images/background/bg_6.jpg"))
-    bg[6]  = pygame.image.load(os.path.join("doc/images/background/bg_7.jpg"))
-    bg[7]  = pygame.image.load(os.path.join("doc/images/background/bg_8.jpg"))
-    bg[8]  = pygame.image.load(os.path.join("doc/images/background/bg_9.jpg"))
-    bg[9]  = pygame.image.load(os.path.join("doc/images/background/bg_10.jpg"))
-    bg[10]  = pygame.image.load(os.path.join("doc/images/background/bg_11.jpg"))
-    bg[11]  = pygame.image.load(os.path.join("doc/images/background/bg_12.jpg"))
-    bg[12]  = pygame.image.load(os.path.join("doc/images/background/bg_13.jpg"))
-    bg[13]  = pygame.image.load(os.path.join("doc/images/background/bg_14.jpg"))
-
-    exp = pygame.image.load(os.path.join("doc/images/spacecraft/explosion.png"))
-
-
-    #only return one spacecraft and one backgoround
-    a = randint(0, N_spcft-1)
-    b = randint(0, N_bg-1)
-
-    return spcft[a], aster, bg[b], exp
-
-
+    return spacecraft_imag, aster_imag, bg_imag, exp_imag
