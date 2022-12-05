@@ -20,7 +20,7 @@ def main(cap, hands, mp_hands, mp_drawing_styles, mp_drawing):
     #END_FONT = pygame.font.SysFont("comicsans", 70)
     DRAW_LINES = False
 
-    bird_img = [pygame.transform.scale(pygame.image.load(os.path.join("source\pictures", "pic_1.png")), (100, 100) )]
+    bird_img = [pygame.transform.scale(pygame.image.load(os.path.join("src\pictures", "pic_1.png")), (100, 100) )]
     pipe_img  = pygame.transform.scale2x(pygame.image.load(os.path.join("source\pictures", "pic_4.png")))
     base_img = pygame.transform.scale2x(pygame.image.load(os.path.join("source\pictures", "pic_3.png")))
     bg_img  = pygame.transform.scale2x(pygame.image.load(os.path.join("source\pictures", "pic_2.png")))
