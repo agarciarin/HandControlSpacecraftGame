@@ -34,13 +34,36 @@ def main():
         WIN = pygame.display.set_mode((sp.WIN_WIDTH, sp.WIN_HEIGHT))
         pygame.display.set_caption("Spacecraft game")
 
+        N = 5
+        past_values = []
+        weighted_avg_denominator = sum(range(1, N+1))
 
         #game loop
         while True:
-            vect = hand_cap(cap, hands, mp_hands, mp_drawing_styles, mp_drawing)
+            x, y, z = hand_cap(cap, hands, mp_hands, mp_drawing_styles, mp_drawing)
 
-            print("vect=", vect)
-            print("type", type(vect))
+            print("vect=", x)
+            print("type", type(x))
+
+            # update the list of past values
+            past_values.append((x, y, z))
+            # remove the oldest value from the list if the list is longer than N
+            if len(past_values) > N:
+                past_values.pop(0)
+            # compute the weighted average of the current and past positions
+            # to get the smoothed position of the bird
+            x_smooth = sum([x * (i+1) for i, (x, y, z) in enumerate(past_values)]) / weighted_avg_denominator
+            y_smooth = sum([y * (i+1) for i, (x, y, z) in enumerate(past_values)]) / weighted_avg_denominator
+            z_smooth = sum([z * (i+1) for i, (x, y, z) in enumerate(past_values)]) / weighted_avg_denominator
+            # update the position of the bird using the smoothed coordinates
+            #x, y, z = x_smooth, y_smooth, z_smooth
+
+            
+            
+            x1 = (-x_smooth+1)*sp.WIN_WIDTH
+            y1 = y_smooth*sp.WIN_HEIGHT
+            scaled_spcft_img = pygame.transform.scale(spcft, (sp.SPCRFT_W0*(0.7-z_smooth*3), sp.SPCRFT_H0*(0.7-z_smooth*3)))
+                
             """
             if x >= 0 and x <= 1:
                 x1 = (1-x)*sp.WIN_WIDTH
@@ -48,10 +71,14 @@ def main():
             else:
                 x1 = 200
                 y1 = 200
-           
-            spcft_1 = spcraft(vect[0], vect[1], vect[2], spcft)
-            windo.draw(WIN, spcft_1)
             """
+           
+
+            spcft_1 = spcraft(x1, y1, scaled_spcft_img)
+            #aster_1 = 
+
+            windo.draw(WIN, spcft_1)
+            
 
 
 

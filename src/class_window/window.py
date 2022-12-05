@@ -1,4 +1,4 @@
-
+import pygame
 
 
 
@@ -9,9 +9,11 @@ class Window:
         self.w = w
         self.bg = imag
 
-    def draw(self, win, spcft):
+    def draw(self, win, spcft, aster):
         win.blit(self.bg, (0,0))
         spcft.draw(win)
+
+        pygame.display.update()
 
 
 
