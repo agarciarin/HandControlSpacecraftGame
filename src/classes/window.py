@@ -8,7 +8,7 @@ class Window:
         self.bg = imag
         self.window = pygame.display.set_mode([h, w])
     
-        pygame.display.set_caption("Spacecraft game")
+        pygame.display.set_caption("Hand Control Spacecraft Game")
     
     def blit_(self, imag, vect):
         self.window.blit(imag, vect)
@@ -20,4 +20,3 @@ class Window:
     def update(self, spacecraft):
         self.draw(spacecraft)
         pygame.display.update()
-

@@ -1,3 +1,5 @@
+# Minigame
+
 import cv2
 import mediapipe as mp
 import pyautogui
@@ -36,8 +38,8 @@ def main():
         #Load images
         sp_imag, aster_imags, bg_imag, exp_imag = img.load_imag()
         
-        spacecraft = Spacecraft(0.5, 0.5, sp_imag)
         window = Window(sp.WIN_WIDTH, sp.WIN_HEIGHT, bg_imag)
+        spacecraft = Spacecraft(0.5, 0.5, sp_imag)
         
         list = ListCoord(sp.N_FILTER)
 
@@ -60,12 +62,9 @@ def main():
             
             coord_smooth = list.filter()
             
-
             window.update(spacecraft)
-            #aster_1 = 
-            spacecraft.update(coord_smooth[0], coord_smooth[1], coord_smooth[2])
-        
-
+            spacecraft.update(coord_smooth[0], coord_smooth[1], coord_smooth[2], sp_imag)
+            #asteroids = 
 
 
 
@@ -74,8 +73,6 @@ def main():
             -if condition finish game or escape
                 break
 
-            -spacecraft image resize in term of z 
-            -spacecraft draw limits on screen
             -draw asteroids
             -colision asteroids, show explosion and finish game
             -score marker on screen
