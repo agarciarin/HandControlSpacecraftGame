@@ -46,6 +46,9 @@ class ListCoord:
     def __init__(self, N):
         self.list = empty([N], dtype=ndarray)
 
+    def pop_last_element(self, index):
+        return 0
+
     def update(self):
         self
 
