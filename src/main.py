@@ -31,6 +31,7 @@ def main():
         min_tracking_confidence=0.5) as hands:
         
         pygame.init() # Initializing PyGame
+        clock = pygame.time.Clock()
 
         #Load images
         sp_imag, aster_imags, bg_imag, exp_imag = img.load_imag()
@@ -38,56 +39,50 @@ def main():
         spacecraft = Spacecraft(0.5, 0.5, sp_imag)
         window = Window(sp.WIN_WIDTH, sp.WIN_HEIGHT, bg_imag)
         
-        #ListCoord(sp.N_FILTER)
-
+        list = ListCoord(sp.N_FILTER)
 
         #Game loop
         while True:
             pygame.event.get()
-            vect = hand_cap(cap, hands, mp_hands, mp_drawing_styles, mp_drawing)
-            
+            clock.tick(sp.FPS)
+
+            coord0 = hand_cap(cap, hands, mp_hands, mp_drawing_styles, mp_drawing)
             
             ###BEGIN_ControlMouse
             aux = pyautogui.position()
-            #vect = np.array([1-aux[0]/1920, aux[1]/1080, -0.1])
+            #coord0 = np.array([1-aux[0]/1920, aux[1]/1080, -0.1])
             ###EEND_ControlMouse
-            #print(vect)
+            #print(vect) #print("suu", type(list.list))
+
+            list.insert(coord0)
+            if list.n > list.n_max:
+                list.pop_last_element()
+            
+            coord_smooth = list.filter()
+            
 
             window.update(spacecraft)
             #aster_1 = 
-            spacecraft.update(vect[0], vect[1], vect[2])
-            #window.update(spacecraft)
+            spacecraft.update(coord_smooth[0], coord_smooth[1], coord_smooth[2])
         
 
 
 
+
             """
-            to-do
-            if condition finish game or escape
+            to-do:
+            -if condition finish game or escape
                 break
+
+            -spacecraft image resize in term of z 
+            -spacecraft draw limits on screen
+            -draw asteroids
+            -colision asteroids, show explosion and finish game
+            -score marker on screen
+            -init menu
+            -start game when wave hand or similar
             """
-
-
-            
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 if __name__ == "__main__":
     main()
-
-    """
-    aa = ListCoord(5)
-    print(type(aa))
-    print(aa)
-    """

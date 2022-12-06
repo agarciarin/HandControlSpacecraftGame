@@ -32,27 +32,27 @@ def hand_cap(cap, hands, mp_hands, mp_drawing_styles, mp_drawing):
 
     else:
         return sp.SPCRAFT_POS0
-"""
-class Coordinate:
-    def __init__(self, x, y, z):
-        self.x = x
-        self.y = y
-        self.z = z
-    
-    def get_coord(self):
-        return array([self.x, self.y, self.z])
-"""
+
 class ListCoord:
-    def __init__(self, N):
-        self.list = empty([N], dtype=ndarray)
+    def __init__(self, n_max):
+        self.list = []
+        self.n = 0
+        self.n_max = n_max
 
-    def pop_last_element(self, index):
-        return 0
+    def insert(self, coord):
+        self.list.append(coord)
+        self.n += 1
 
-    def update(self):
-        self
-
-    def filter(coord):
+    def pop_last_element(self):
+        self.list.pop(0)
+        self.n -= 1
         
-        return 0
+    def filter(self):
+        avg_denom = sum(range(1, self.n+1))
+
+        x_smooth = sum( [x * (i+1) for i, (x, y, z) in enumerate(self.list)] ) / avg_denom
+        y_smooth = sum( [y * (i+1) for i, (x, y, z) in enumerate(self.list)] ) / avg_denom
+        z_smooth = sum( [z * (i+1) for i, (x, y, z) in enumerate(self.list)] ) / avg_denom
+        
+        return [x_smooth, y_smooth, z_smooth]
     

@@ -30,10 +30,4 @@ def load_imag():
     aster_imag[5] = pygame.image.load(os.path.join("doc/images/asteroid/asteroid_6.png"))
     aster_imag[6] = pygame.image.load(os.path.join("doc/images/asteroid/asteroid_7.png"))
     
-    """
-    spacecraft_imag = pygame.transform.scale( pygame.image.load(os.path.join("doc/images/test/pic_1.png")), (SPCRAFT_W0, SPCRAFT_H0) )
-    bg_imag = pygame.image.load(os.path.join("doc/images/test/pic_2.png"))
-    aster_imag = pygame.transform.scale( pygame.image.load(os.path.join("doc/images/test/pic_3.png")), (SPCRAFT_W0, SPCRAFT_H0) )
-    exp_imag = pygame.transform.scale( pygame.image.load(os.path.join("doc/images/test/pic_1_1.png")), (SPCRAFT_W0, SPCRAFT_H0) )
-    """
     return spacecraft_imag, aster_imag, bg_imag, exp_imag
