@@ -11,14 +11,14 @@ import utils.load_images as img
 import utils.setup as sp
 from classes.window import Window
 from classes.spacecraft import Spacecraft
-from classes.asteroids import Asteroid
+from classes.asteroids import Asteroid, ListAsteroids
+from classes.time import Time
 from hands_detection.hand_detection import hand_cap, ListCoord
 
 
 
 def main():
 
-    t0 = time.time()
     mp_drawing = mp.solutions.drawing_utils
     mp_drawing_styles = mp.solutions.drawing_styles
     mp_hands = mp.solutions.hands
@@ -43,21 +43,24 @@ def main():
         
         window = Window(sp.WIN_WIDTH, sp.WIN_HEIGHT, bg_imag)
         spacecraft = Spacecraft(0.5, 0.5, sp_imag)
-        test_asteroid1 = Asteroid(aster_imags[0], False)
+        test_asteroid1 = Asteroid(aster_imags[4], True)
+        listAster = ListAsteroids()
         
         list = ListCoord(sp.N_FILTER)
+
+        t = Time(time.time())
 
         #Game loop
         while True:
             pygame.event.get()
             clock.tick(sp.FPS)
-            t = time.time()-t0
+            t.update(time.time())
 
-            coord0 = hand_cap(cap, hands, mp_hands, mp_drawing_styles, mp_drawing)
+            #coord0 = hand_cap(cap, hands, mp_hands, mp_drawing_styles, mp_drawing)
             
             ###BEGIN_ControlMouse
             aux = pyautogui.position()
-            #coord0 = np.array([1-aux[0]/1920, aux[1]/1080, -0.1])
+            coord0 = np.array([1-aux[0]/1920, aux[1]/1080, -0.1])
             ###EEND_ControlMouse
             #print(vect) #print("suu", type(list.list))
 
@@ -68,10 +71,10 @@ def main():
             coord_smooth = list.filter()
             
             spacecraft.update(coord_smooth[0], coord_smooth[1], coord_smooth[2], sp_imag)
-            #asteroids = 
+            test_asteroid1.update(t.get_dt())
+            #listAster.update(t, aster_imags)
             window.update(spacecraft, test_asteroid1)
-
-            
+           
 
 
             """
@@ -79,7 +82,8 @@ def main():
             -if condition finish game or escape
                 break
 
-            -draw asteroids with velocity
+            -create list of asteroids and draw them
+            -delete asteroid if condition
             -colision asteroids function 
             -if colision show explosion and finish game
             -score marker on screen

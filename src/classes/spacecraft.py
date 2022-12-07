@@ -1,5 +1,5 @@
 import utils.setup as sp
-import pygame.transform as trans
+from pygame.transform import scale
 
 class Spacecraft:
     def __init__(self, x, y, imag):
@@ -21,7 +21,7 @@ class Spacecraft:
         self.h = sp.SPCRAFT_H0 * self.f
         self.x = (1-x)*sp.WIN_WIDTH-self.w/2
         self.y = y*sp.WIN_HEIGHT-self.h/2
-        self.imag = trans.scale(imag, (self.w, self.h))
+        self.imag = scale(imag, (self.w, self.h))
        
         self.limits()
 
