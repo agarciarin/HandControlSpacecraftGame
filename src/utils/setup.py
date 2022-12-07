@@ -19,17 +19,17 @@ SPCRAFT_F2 = 0.1   #Factor2 = avoid loss resolution
 N_FILTER = 10 
 
 #Asteroids
+END_ASTER_LIFE = 500
 ASTER_W0_H0 = 600
 ASTER_F1 = 0.4 # % of ASTER_W0_H0 = min value of images size
-END_ASTER_LIFE = 300
 ASTER_X0 = 0.1 #[0.1 - 0.5]
-ASTER_Y0 = 0.5 #[0.1 - 1]
+ASTER_Y0 = 0.8 #[0.1 - 1]
 ASTER_VEL_MIN = 200 
 ASTER_VEL_MAX = 800
-ASTER_ALPHA = 20 #deg
-ASTER_VROT_RANGE = 500 #deg/s
+ASTER_ALPHA = 20 #(deg)
+ASTER_VROT_RANGE = 500 #(deg/s)
 
 #Asteroids List
-ASTER_DT = 5 #time between creation of asteroids
+ASTER_DT = 1 #(s) time between creation of asteroids
 
 

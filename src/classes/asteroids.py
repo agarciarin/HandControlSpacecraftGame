@@ -9,33 +9,22 @@ class Asteroid:
         self.f = uniform(sp.ASTER_F1, 1)
         self.w = sp.ASTER_W0_H0*self.f
         self.h = sp.ASTER_W0_H0*self.f
-        #self.x = sp.WIN_WIDTH*(1+sp.ASTER_X0) - self.w/2
-        self.x = 1600
-        #self.y = uniform( sp.WIN_HEIGHT*(1-sp.ASTER_Y0)/2, sp.WIN_HEIGHT*((1+sp.ASTER_Y0)/2) ) - self.h/2
-        self.y = 500
-        #self.vel = uniform(sp.ASTER_VEL_MIN, sp.ASTER_VEL_MAX)
-        self.vel = 200
-        #self.alpha = uniform(-sp.ASTER_ALPHA, sp.ASTER_ALPHA)
-        self.alpha = 10
+        self.x = sp.WIN_WIDTH*(1+sp.ASTER_X0) - self.w/2
+        self.y = uniform( sp.WIN_HEIGHT*(1-sp.ASTER_Y0)/2, sp.WIN_HEIGHT*((1+sp.ASTER_Y0)/2) ) - self.h/2
+        self.vel = uniform(sp.ASTER_VEL_MIN, sp.ASTER_VEL_MAX)
+        self.alpha = uniform(-sp.ASTER_ALPHA, sp.ASTER_ALPHA)
         self.rot = rotation
-        #self.vrot = uniform(-sp.ASTER_VROT_RANGE, sp.ASTER_VROT_RANGE)
-        self.vrot = 50
+        self.vrot = uniform(-sp.ASTER_VROT_RANGE, sp.ASTER_VROT_RANGE)
         self.beta = 0
         self.imag0 = rotozoom(imag, -self.alpha, self.f)
         self.imag = self.imag0
         self.life = True
 
     def draw(self, win):
-        win.blit(self.imag, self.get_pos())
+        win.blit(self.imag, self.get_pos_draw())
 
-    def get_pos(self): #return [x, y] image's center
+    def get_pos_draw(self): #return [x, y] image's center
         return array([self.x-self.w/2, self.y-self.h/2])
-    
-    def get_x(self):
-        return self.x-self.w/2
-
-    def get_y(self):
-        return self.y-self.h/2
 
     def update(self, dt):
         if self.rot:
@@ -49,32 +38,42 @@ class Asteroid:
         self.life = self.end_life()
      
     def end_life(self):
-        a = self.get_x() <= -sp.END_ASTER_LIFE
-        b = self.get_y() <= -sp.END_ASTER_LIFE
-        c = self.get_y() >= sp.WIN_HEIGHT + sp.END_ASTER_LIFE
+        a = self.x <= -sp.END_ASTER_LIFE
+        b = self.y <= -sp.END_ASTER_LIFE
+        c = self.y >= sp.WIN_HEIGHT + sp.END_ASTER_LIFE
 
-        return a or b or c
-
+        return not(a or b or c)
 
 class ListAsteroids:
-    def __init__(self):
+    def __init__(self, imags):
         self.list = []
+        self.imags = imags
         self.n = 0
-        self.t = 0
-        self.aux = 0
+        self.n_c = 0   #n total creations
 
-    def update(self, t, aster_imags):
-        if self.t > 5:
-            self.aux = t
-            self.t = 0
+    def draw(self, win):
+        for i in range(self.n):
+            self.list[i].draw(win)
 
-            i = randint(0, len(aster_imags)-1)
-            aster = Asteroid(aster_imags[i], False)
-            self.list.append(aster)
-            self.n += 1
+    def insert_element(self, elem):
+        self.list.append(elem)
+        self.n += 1
 
-        self.t = t - self.aux
+    def pop_element(self):
+        for i in range(self.n):
+            if not(self.list[i].life):
+                self.list.pop(i)
+                self.n -= 1
+                break
 
+    def update(self, t, dt):
+        if t >= sp.ASTER_DT*self.n_c:
+            self.n_c += 1
+            i = randint(0, len(self.imags)-1)
+            self.insert_element( Asteroid(self.imags[i], not(i==0)) ) #i=0 is a commet
 
-    
-    
+        for i in range(self.n):
+            self.list[i].update(dt)
+            
+        self.pop_element()
+            

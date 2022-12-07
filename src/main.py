@@ -44,7 +44,7 @@ def main():
         window = Window(sp.WIN_WIDTH, sp.WIN_HEIGHT, bg_imag)
         spacecraft = Spacecraft(0.5, 0.5, sp_imag)
         test_asteroid1 = Asteroid(aster_imags[4], True)
-        listAster = ListAsteroids()
+        listAster = ListAsteroids(aster_imags)
         
         list = ListCoord(sp.N_FILTER)
 
@@ -71,9 +71,9 @@ def main():
             coord_smooth = list.filter()
             
             spacecraft.update(coord_smooth[0], coord_smooth[1], coord_smooth[2], sp_imag)
-            test_asteroid1.update(t.get_dt())
-            #listAster.update(t, aster_imags)
-            window.update(spacecraft, test_asteroid1)
+            listAster.update(t.get_t(), t.get_dt())
+            window.update(spacecraft, listAster)
+
            
 
 
@@ -82,8 +82,6 @@ def main():
             -if condition finish game or escape
                 break
 
-            -create list of asteroids and draw them
-            -delete asteroid if condition
             -colision asteroids function 
             -if colision show explosion and finish game
             -score marker on screen

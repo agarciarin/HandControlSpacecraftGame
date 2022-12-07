@@ -58,8 +58,17 @@ def main_test3():
     for i in range(N_aster):
         print(i)
 
+def main_test4():
+    i = 0
+    print(i == 0)
+
+    
+    for i in range(0):
+        print(i)
+
 
 if __name__ == "__main__":
     #main_test1()
-    main_test2()
+    #main_test2()
     #main_test3()
+    main_test4()
