@@ -13,10 +13,11 @@ class Window:
     def blit_(self, imag, vect):
         self.window.blit(imag, vect)
     
-    def draw(self, spcft):
+    def draw(self, spcft, aster):
         self.blit_(self.bg, [0,0])
+        aster.draw(self.window)
         spcft.draw(self.window)
 
-    def update(self, spacecraft):
-        self.draw(spacecraft)
+    def update(self, spacecraft, asteroids):
+        self.draw(spacecraft, asteroids)
         pygame.display.update()

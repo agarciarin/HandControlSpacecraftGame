@@ -1,6 +1,9 @@
 #Simply test functions to learn it behavior
+import pyautogui
+import numpy as np
+import time
 
-def main():
+def main_test1():
     """
     N = 2
     past_values = [[0.5, 0.6, -0.1], [0.45, 0.55, -0.05]]
@@ -35,9 +38,28 @@ def main():
     print(weighted_avg_denominator)
     """
 
+def main_test2():
 
+    while True:
+        time.sleep(1)
+        aux = pyautogui.position()
+        coord0 = np.array([1-aux[0]/1920, aux[1]/1080, -0.1])
 
-    
+        a = coord0[0] <= 1.1
+        b = coord0[1] <= 1.1
+
+        print(coord0)
+        print(a)
+        print(b)
+        print(a and b)
+
+def main_test3():
+    N_aster = 7
+    for i in range(N_aster):
+        print(i)
+
 
 if __name__ == "__main__":
-    main()
+    #main_test1()
+    main_test2()
+    #main_test3()

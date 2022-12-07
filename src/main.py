@@ -1,21 +1,24 @@
-# Minigame
+# Minigame controled by hand gesture
 
 import cv2
 import mediapipe as mp
 import pyautogui
 import pygame
 import numpy as np
+import time
 
 import utils.load_images as img
 import utils.setup as sp
-from classes.spacecraft import Spacecraft
 from classes.window import Window
-from hands_detection.hand_detect import hand_cap, ListCoord
+from classes.spacecraft import Spacecraft
+from classes.asteroids import Asteroid
+from hands_detection.hand_detection import hand_cap, ListCoord
 
 
 
 def main():
 
+    t0 = time.time()
     mp_drawing = mp.solutions.drawing_utils
     mp_drawing_styles = mp.solutions.drawing_styles
     mp_hands = mp.solutions.hands
@@ -40,6 +43,7 @@ def main():
         
         window = Window(sp.WIN_WIDTH, sp.WIN_HEIGHT, bg_imag)
         spacecraft = Spacecraft(0.5, 0.5, sp_imag)
+        test_asteroid1 = Asteroid(aster_imags[0], False)
         
         list = ListCoord(sp.N_FILTER)
 
@@ -47,6 +51,7 @@ def main():
         while True:
             pygame.event.get()
             clock.tick(sp.FPS)
+            t = time.time()-t0
 
             coord0 = hand_cap(cap, hands, mp_hands, mp_drawing_styles, mp_drawing)
             
@@ -62,10 +67,11 @@ def main():
             
             coord_smooth = list.filter()
             
-            window.update(spacecraft)
             spacecraft.update(coord_smooth[0], coord_smooth[1], coord_smooth[2], sp_imag)
             #asteroids = 
+            window.update(spacecraft, test_asteroid1)
 
+            
 
 
             """
@@ -73,11 +79,13 @@ def main():
             -if condition finish game or escape
                 break
 
-            -draw asteroids
-            -colision asteroids, show explosion and finish game
+            -draw asteroids with velocity
+            -colision asteroids function 
+            -if colision show explosion and finish game
             -score marker on screen
             -init menu
             -start game when wave hand or similar
+            -maybe: customize z coordinate filter -> smoother
             """
 
 

@@ -2,7 +2,7 @@ import pygame
 import os
 from numpy import empty
 from random import randint
-from utils.setup import WIN_HEIGHT, WIN_WIDTH, SPCRAFT_W0, SPCRAFT_H0
+from utils.setup import WIN_HEIGHT, WIN_WIDTH, SPCRAFT_W0, SPCRAFT_H0, ASTER_W0_H0
 
 
 
@@ -17,17 +17,12 @@ def load_imag():
     n_spcraft = randint(1, N_spcraft)
     n_bg = randint(1, N_bg)
 
-    aster_imag = empty([N_aster], dtype=pygame.Surface)
-
     spacecraft_imag = pygame.transform.scale( pygame.image.load(os.path.join("doc/images/spacecraft/spa_" + str(n_spcraft) + ".png")), (SPCRAFT_W0, SPCRAFT_H0) )
     bg_imag  = pygame.transform.scale( pygame.image.load(os.path.join("doc/images/background/bg_" + str(n_bg) + ".jpg")), (WIN_WIDTH, WIN_HEIGHT) )
     exp_imag = pygame.transform.scale( pygame.image.load(os.path.join("doc/images/spacecraft/explosion.png")), (SPCRAFT_W0, SPCRAFT_H0) )
-    aster_imag[0] = pygame.image.load(os.path.join("doc/images/asteroid/asteroid_1.png"))
-    aster_imag[1] = pygame.image.load(os.path.join("doc/images/asteroid/asteroid_2.png"))
-    aster_imag[2] = pygame.image.load(os.path.join("doc/images/asteroid/asteroid_3.png"))
-    aster_imag[3] = pygame.image.load(os.path.join("doc/images/asteroid/asteroid_4.png"))
-    aster_imag[4] = pygame.image.load(os.path.join("doc/images/asteroid/asteroid_5.png"))
-    aster_imag[5] = pygame.image.load(os.path.join("doc/images/asteroid/asteroid_6.png"))
-    aster_imag[6] = pygame.image.load(os.path.join("doc/images/asteroid/asteroid_7.png"))
     
+    aster_imag = empty([N_aster], dtype=pygame.Surface)
+    for i in range(N_aster):
+        aster_imag[i] = pygame.transform.scale( pygame.image.load(os.path.join("doc/images/asteroid/asteroid_" + str(i+1) + ".png")), (ASTER_W0_H0, ASTER_W0_H0) )
+  
     return spacecraft_imag, aster_imag, bg_imag, exp_imag
