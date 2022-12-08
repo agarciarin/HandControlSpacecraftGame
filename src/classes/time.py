@@ -1,5 +1,4 @@
-
-
+#Class time
 class Time:
     def __init__(self, t):
         self.t0_abs = t

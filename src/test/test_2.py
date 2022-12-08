@@ -2,6 +2,8 @@
 import pyautogui
 import numpy as np
 import time
+from math import dist
+from numpy.linalg import norm
 
 def main_test1():
     """
@@ -62,13 +64,23 @@ def main_test4():
     i = 0
     print(i == 0)
 
-    
     for i in range(0):
         print(i)
+
+
+def main_test5():
+    a = [2, 5]
+    b = [5, 1]
+    c = dist(a,b)
+    cc = norm(a,b)
+    print(c)
+    print(cc)
+
 
 
 if __name__ == "__main__":
     #main_test1()
     #main_test2()
     #main_test3()
-    main_test4()
+    #main_test4()
+    main_test5()

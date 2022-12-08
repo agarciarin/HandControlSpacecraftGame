@@ -1,4 +1,4 @@
-import pygame
+from pygame.display import set_mode, set_caption, update
 
 
 class Window:
@@ -6,9 +6,9 @@ class Window:
         self.h = h
         self.w = w
         self.bg = imag
-        self.window = pygame.display.set_mode([h, w])
+        self.window = set_mode([h, w])
     
-        pygame.display.set_caption("Hand Control Spacecraft Game")
+        set_caption("Hand Control Spacecraft Game")
     
     def blit_(self, imag, vect):
         self.window.blit(imag, vect)
@@ -20,4 +20,4 @@ class Window:
 
     def update(self, spacecraft, asteroids):
         self.draw(spacecraft, asteroids)
-        pygame.display.update()
+        update()

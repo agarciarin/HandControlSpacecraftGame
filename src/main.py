@@ -4,17 +4,18 @@ import cv2
 import mediapipe as mp
 import pyautogui
 import pygame
-import numpy as np
 import time
 
 import utils.load_images as img
 import utils.setup as sp
 from classes.window import Window
 from classes.spacecraft import Spacecraft
-from classes.asteroids import Asteroid, ListAsteroids
+from classes.asteroids import ListAsteroids
 from classes.time import Time
 from hands_detection.hand_detection import hand_cap, ListCoord
 
+#Delete
+import numpy as np
 
 
 def main():
@@ -43,7 +44,7 @@ def main():
         
         window = Window(sp.WIN_WIDTH, sp.WIN_HEIGHT, bg_imag)
         spacecraft = Spacecraft(0.5, 0.5, sp_imag)
-        test_asteroid1 = Asteroid(aster_imags[4], True)
+        explosion = Spacecraft(0.5, 0.5, exp_imag)
         listAster = ListAsteroids(aster_imags)
         
         list = ListCoord(sp.N_FILTER)
@@ -62,19 +63,25 @@ def main():
             aux = pyautogui.position()
             coord0 = np.array([1-aux[0]/1920, aux[1]/1080, -0.1])
             ###EEND_ControlMouse
-            #print(vect) #print("suu", type(list.list))
 
             list.insert(coord0)
             if list.n > list.n_max:
                 list.pop_last_element()
             
             coord_smooth = list.filter()
-            
-            spacecraft.update(coord_smooth[0], coord_smooth[1], coord_smooth[2], sp_imag)
-            listAster.update(t.get_t(), t.get_dt())
-            window.update(spacecraft, listAster)
+            if spacecraft.shield <= 0:
+                explosion.update(last_coord[0], last_coord[1], last_coord[2], exp_imag, [], 0)
+                window.update(explosion, listAster)
+                time.sleep(3)
+                break
+            else:
+                spacecraft.update(coord_smooth[0], coord_smooth[1], coord_smooth[2], sp_imag, listAster.get_pos_list(), t.get_dt())
+                last_coord = coord_smooth
+                listAster.update(t.get_t(), t.get_dt())
+                window.update(spacecraft, listAster)
 
-           
+                print("Shield", spacecraft.shield)
+                print("Time", t.get_t())
 
 
             """
@@ -82,11 +89,10 @@ def main():
             -if condition finish game or escape
                 break
 
-            -colision asteroids function 
-            -if colision show explosion and finish game
+            -if colision finish game
             -score marker on screen
             -init menu
-            -start game when wave hand or similar
+            -maybe: start game when wave hand or similar
             -maybe: customize z coordinate filter -> smoother
             """
 
