@@ -5,6 +5,7 @@ import mediapipe as mp
 import pyautogui
 import pygame
 import time
+from numpy import array
 
 import utils.load_images as img
 import utils.setup as sp
@@ -15,9 +16,11 @@ from classes.time import Time
 from classes.scoreboard import Scoreboard
 from hands_detection.hand_detection import hand_cap, ListCoord
 
-#Delete
-import numpy as np
 
+def delete_objects(list_objs):
+    for i in range(len(list_objs)):
+        del list_objs[0]
+    del list_objs
 
 def main():
 
@@ -48,9 +51,7 @@ def main():
         explosion = Spacecraft(0.5, 0.5, exp_imag)
         listAster = ListAsteroids(aster_imags)
         scoreboard = Scoreboard()
-        
         list = ListCoord(sp.N_FILTER)
-
         t = Time(time.time())
 
         #Game loop
@@ -63,7 +64,7 @@ def main():
             
             ###BEGIN_ControlMouse
             aux = pyautogui.position()
-            coord0 = np.array([1-aux[0]/1920, aux[1]/1080, -0.1])
+            coord0 = array([1-aux[0]/1920, aux[1]/1080, -0.1])
             ###EEND_ControlMouse
 
             list.insert(coord0)
@@ -83,8 +84,6 @@ def main():
                 scoreboard.update(spacecraft.shield, t.get_t())
                 window.update(spacecraft, listAster, scoreboard)
 
-                #print("Shield", spacecraft.shield)
-                #print("Time", t.get_t())
 
             #scoreboard.draw_score(window.window)
 
@@ -94,11 +93,15 @@ def main():
                 break
 
             -if colision finish game
-            -score marker on screen
             -init menu
             -maybe: start game when wave hand or similar
             -maybe: customize z coordinate filter -> smoother
             """
+        delete_objects(spacecraft, explosion, listAster, scoreboard, list)
+        print("huaaaam")
+
+
+
 
 
 if __name__ == "__main__":

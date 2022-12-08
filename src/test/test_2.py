@@ -84,6 +84,21 @@ def  main_test6():
     print(pos)
 
 
+def  main_test7():
+    pos = [1, 2, 3, 4]
+    print(pos)
+
+    #del pos[0]
+    #print(pos)
+
+    for i in range(len(pos)):
+        del pos[0]
+        print(pos)
+    del pos
+    print("su")
+
+
+
 
 if __name__ == "__main__":
     #main_test1()
@@ -91,4 +106,5 @@ if __name__ == "__main__":
     #main_test3()
     #main_test4()
     #main_test5()
-    main_test6()
+    #main_test6()
+    main_test7()

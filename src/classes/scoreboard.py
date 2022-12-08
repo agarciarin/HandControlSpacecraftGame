@@ -23,12 +23,11 @@ class Scoreboard:
         pyd.circle(win, self.color_ol, self.pos_low, (self.width+self.width_ol)/2)
         pyd.circle(win, self.color_ol, self.pos_high, (self.width+self.width_ol)/2)
         pyd.line(win, self.color_ol, self.pos_low, self.pos_high, width=self.width+self.width_ol)
-
         pyd.circle(win, self.color, self.pos_low, self.width/2)
         pyd.circle(win, self.color, self.pos_high, self.width/2)
         pyd.line(win, self.color, self.pos_low, self.pos_high, width=self.width)
     
-        win.blit(self.text_surface, [50, sp.WIN_HEIGHT*0.85])
+        win.blit(self.text_surface, [sp.WIN_WIDTH*0.03, sp.WIN_HEIGHT*0.85])
 
     def update(self, shield, t):
         self.shield = shield/sp.SPCRAFT_SHIELD0
