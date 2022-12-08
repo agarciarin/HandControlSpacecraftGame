@@ -30,7 +30,7 @@ class Spacecraft:
 
     def damage(self, list_pos, dt):
         if self.collision(list_pos):
-            self.shield -= sp.SPCRAFT_SHIELD_FACTOR*dt
+            self.shield -= sp.SPCRAFT_DAMAGE_FACTOR*dt
 
     def draw(self, win):
         win.blit(self.imag, self.get_pos_draw())
@@ -52,6 +52,10 @@ class Spacecraft:
         elif self.y >= sp.WIN_HEIGHT-self.h/2:
             self.y = sp.WIN_HEIGHT-self.h/2
 
+    def repair_damage(self, dt):
+        if self.shield <= sp.SPCRAFT_SHIELD0:
+            self.shield += sp.SPCRAFT_REPAIR_FACTOR*dt
+
     def update(self, x, y, z, imag, list_pos, dt):
         self.z = z
         self.f = abs((-(sp.SPCRAFT_F1-1)*z/0.7 + 1)*sp.SPCRAFT_F2)
@@ -64,4 +68,5 @@ class Spacecraft:
        
         self.limits()
         self.damage(list_pos, dt)
+        self.repair_damage(dt)
     

@@ -76,6 +76,13 @@ def main_test5():
     print(c)
     print(cc)
 
+def  main_test6():
+    pos = [5, 6]
+    print(pos)
+
+    pos[1] = pos[1]*10
+    print(pos)
+
 
 
 if __name__ == "__main__":
@@ -83,4 +90,5 @@ if __name__ == "__main__":
     #main_test2()
     #main_test3()
     #main_test4()
-    main_test5()
+    #main_test5()
+    main_test6()

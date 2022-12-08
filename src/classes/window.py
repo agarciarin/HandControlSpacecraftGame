@@ -13,11 +13,12 @@ class Window:
     def blit_(self, imag, vect):
         self.window.blit(imag, vect)
     
-    def draw(self, spcft, aster):
+    def draw(self, spcft, aster, score):
         self.blit_(self.bg, [0,0])
         aster.draw(self.window)
+        score.draw(self.window)
         spcft.draw(self.window)
 
-    def update(self, spacecraft, asteroids):
-        self.draw(spacecraft, asteroids)
+    def update(self, spacecraft, asteroids, scoreboard):
+        self.draw(spacecraft, asteroids, scoreboard)
         update()

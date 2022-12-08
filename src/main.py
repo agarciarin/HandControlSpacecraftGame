@@ -12,6 +12,7 @@ from classes.window import Window
 from classes.spacecraft import Spacecraft
 from classes.asteroids import ListAsteroids
 from classes.time import Time
+from classes.scoreboard import Scoreboard
 from hands_detection.hand_detection import hand_cap, ListCoord
 
 #Delete
@@ -46,6 +47,7 @@ def main():
         spacecraft = Spacecraft(0.5, 0.5, sp_imag)
         explosion = Spacecraft(0.5, 0.5, exp_imag)
         listAster = ListAsteroids(aster_imags)
+        scoreboard = Scoreboard()
         
         list = ListCoord(sp.N_FILTER)
 
@@ -71,18 +73,20 @@ def main():
             coord_smooth = list.filter()
             if spacecraft.shield <= 0:
                 explosion.update(last_coord[0], last_coord[1], last_coord[2], exp_imag, [], 0)
-                window.update(explosion, listAster)
+                window.update(explosion, listAster, scoreboard)
                 time.sleep(3)
                 break
             else:
                 spacecraft.update(coord_smooth[0], coord_smooth[1], coord_smooth[2], sp_imag, listAster.get_pos_list(), t.get_dt())
                 last_coord = coord_smooth
                 listAster.update(t.get_t(), t.get_dt())
-                window.update(spacecraft, listAster)
+                scoreboard.update(spacecraft.shield, t.get_t())
+                window.update(spacecraft, listAster, scoreboard)
 
-                print("Shield", spacecraft.shield)
-                print("Time", t.get_t())
+                #print("Shield", spacecraft.shield)
+                #print("Time", t.get_t())
 
+            #scoreboard.draw_score(window.window)
 
             """
             to-do:
