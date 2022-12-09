@@ -63,10 +63,10 @@ def main():
             clock.tick(sp.FPS)
             t.update(time.time(), menu.show)
             
-            #coord0 = hand_cap(cap, hands, mp_hands, mp_drawing_styles, mp_drawing)
+            coord0 = hand_cap(cap, hands, mp_hands, mp_drawing_styles, mp_drawing)
             ###BEGIN_ControlMouse
             aux = pyautogui.position()
-            coord0 = array([1-aux[0]/1920, aux[1]/1080, -0.01])
+            #coord0 = array([1-aux[0]/1920, aux[1]/1080, -0.01])
             ###EEND_ControlMouse
 
             #Filter input
@@ -80,7 +80,7 @@ def main():
             window.update(spacecraft, listAster, scoreboard, menu)
             menu.update(events, spacecraft.get_pos(), t.dt)
 
-            if not(menu.show):
+            if not menu.show:
                 if spacecraft.damaged:
                     explosion.update(last_coord[0], last_coord[1], last_coord[2], exp_imag, [], 0)
                     window.update(explosion, listAster, scoreboard, menu)
