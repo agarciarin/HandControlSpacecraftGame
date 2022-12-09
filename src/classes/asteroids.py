@@ -9,7 +9,7 @@ import utils.setup as sp
 
 class Asteroid:
     def __init__(self, imag, commet): #(image, True=commet/Falsenot commet)
-        self.f = uniform(sp.ASTER_F1, 1)
+        self.f = uniform(sp.ASTER_F1, 1+(1-sp.ASTER_F1))
         self.w = sp.ASTER_W0_H0*self.f
         self.h = sp.ASTER_W0_H0*self.f
         self.x = sp.WIN_WIDTH*(1+sp.ASTER_X0)

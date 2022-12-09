@@ -1,6 +1,7 @@
 # Minigame controled by hand gesture
 
 import time
+
 import cv2
 import mediapipe as mp
 import pyautogui
@@ -10,12 +11,12 @@ from numpy import array
 import utils.load_images as img
 import utils.setup as sp
 from classes.asteroids import ListAsteroids
+from classes.game import Game
 from classes.menu import Menu
 from classes.scoreboard import Scoreboard
 from classes.spacecraft import Spacecraft
 from classes.time import Time
 from classes.window import Window
-from classes.game import Game
 from hands_detection.hand_detection import ListCoord, hand_cap
 
 
@@ -70,7 +71,7 @@ def main():
                 #coord0 = hand_cap(cap, hands, mp_hands, mp_drawing_styles, mp_drawing)
                 ###BEGIN_ControlMouse
                 aux = pyautogui.position()
-                coord0 = array([1-aux[0]/1920, aux[1]/1080, -0.01])
+                coord0 = array([1-aux[0]/1920, aux[1]/1080, -0.1])
                 ###EEND_ControlMouse
 
                 #Filter input
