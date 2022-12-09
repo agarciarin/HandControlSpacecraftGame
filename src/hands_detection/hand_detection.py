@@ -1,6 +1,7 @@
 import cv2
-import utils.setup as sp
 from numpy import array
+
+import utils.setup as sp
 
 
 def hand_cap(cap, hands, mp_hands, mp_drawing_styles, mp_drawing):

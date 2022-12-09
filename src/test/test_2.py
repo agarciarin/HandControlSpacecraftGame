@@ -4,6 +4,7 @@ import numpy as np
 import time
 from math import dist
 from numpy.linalg import norm
+from numpy import array
 
 def main_test1():
     """
@@ -69,10 +70,10 @@ def main_test4():
 
 
 def main_test5():
-    a = [2, 5]
-    b = [5, 1]
+    a = array([2, 9])
+    b = array([5, 1])
     c = dist(a,b)
-    cc = norm(a,b)
+    cc = norm(a-b)
     print(c)
     print(cc)
 
@@ -88,6 +89,7 @@ def  main_test7():
     pos = [1, 2, 3, 4]
     print(pos)
 
+    """
     #del pos[0]
     #print(pos)
 
@@ -96,7 +98,10 @@ def  main_test7():
         print(pos)
     del pos
     print("su")
+    """
 
+    for i in pos:
+        print(i)
 
 
 
@@ -105,6 +110,6 @@ if __name__ == "__main__":
     #main_test2()
     #main_test3()
     #main_test4()
-    #main_test5()
+    main_test5()
     #main_test6()
-    main_test7()
+    #main_test7()

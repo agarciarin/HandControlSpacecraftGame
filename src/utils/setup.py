@@ -6,12 +6,15 @@ from numpy import array
 #Window
 WIN_WIDTH = 1800
 WIN_HEIGHT = 900
-FPS = 60
+FPS = 120
+
+#Menu
+DT_HOLD = 2 #(s) PLAY/EXIT menu
 
 #Spacecraft initial position
 SPCRAFT_W0 = 800
 SPCRAFT_H0 = 800
-SPCRAFT_POS0 = array([0.8, 0.5, -0.1 ])
+SPCRAFT_POS0 = array([0.8, 0.5, -0.1])
 SPCRAFT_F1 = 6     #Factor1 = max imag size
 SPCRAFT_F2 = 0.1   #Factor2 = avoid loss resolution
 SPCRAFT_SHIELD0 = 5

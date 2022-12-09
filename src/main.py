@@ -1,26 +1,28 @@
 # Minigame controled by hand gesture
 
+import time
 import cv2
 import mediapipe as mp
 import pyautogui
 import pygame
-import time
 from numpy import array
 
 import utils.load_images as img
 import utils.setup as sp
-from classes.window import Window
-from classes.spacecraft import Spacecraft
 from classes.asteroids import ListAsteroids
-from classes.time import Time
+from classes.menu import Menu
 from classes.scoreboard import Scoreboard
-from hands_detection.hand_detection import hand_cap, ListCoord
+from classes.spacecraft import Spacecraft
+from classes.time import Counter, Time, Timer
+from classes.window import Window
+from hands_detection.hand_detection import ListCoord, hand_cap
 
 
 def delete_objects(list_objs):
     for i in range(len(list_objs)):
         del list_objs[0]
     del list_objs
+
 
 def main():
 
@@ -51,58 +53,50 @@ def main():
         explosion = Spacecraft(0.5, 0.5, exp_imag)
         listAster = ListAsteroids(aster_imags)
         scoreboard = Scoreboard()
+        menu = Menu()
         list = ListCoord(sp.N_FILTER)
         t = Time(time.time())
 
         #Game loop
-        while True:
-            pygame.event.get()
+        while not menu.exit_game:
+            events = pygame.event.get()
             clock.tick(sp.FPS)
-            t.update(time.time())
-
-            #coord0 = hand_cap(cap, hands, mp_hands, mp_drawing_styles, mp_drawing)
+            t.update(time.time(), menu.show)
             
+            #coord0 = hand_cap(cap, hands, mp_hands, mp_drawing_styles, mp_drawing)
             ###BEGIN_ControlMouse
             aux = pyautogui.position()
-            coord0 = array([1-aux[0]/1920, aux[1]/1080, -0.1])
+            coord0 = array([1-aux[0]/1920, aux[1]/1080, -0.01])
             ###EEND_ControlMouse
 
+            #Filter input
             list.insert(coord0)
             if list.n > list.n_max:
                 list.pop_last_element()
-            
             coord_smooth = list.filter()
-            if spacecraft.shield <= 0:
-                explosion.update(last_coord[0], last_coord[1], last_coord[2], exp_imag, [], 0)
-                window.update(explosion, listAster, scoreboard)
-                time.sleep(3)
-                break
-            else:
-                spacecraft.update(coord_smooth[0], coord_smooth[1], coord_smooth[2], sp_imag, listAster.get_pos_list(), t.get_dt())
-                last_coord = coord_smooth
-                listAster.update(t.get_t(), t.get_dt())
-                scoreboard.update(spacecraft.shield, t.get_t())
-                window.update(spacecraft, listAster, scoreboard)
 
+            #Update
+            spacecraft.update(coord_smooth[0], coord_smooth[1], coord_smooth[2], sp_imag, listAster.get_pos_list(), t.dt)
+            window.update(spacecraft, listAster, scoreboard, menu)
+            menu.update(events, spacecraft.get_pos(), t.dt)
 
-            #scoreboard.draw_score(window.window)
+            if not(menu.show):
+                if spacecraft.damaged:
+                    explosion.update(last_coord[0], last_coord[1], last_coord[2], exp_imag, [], 0)
+                    window.update(explosion, listAster, scoreboard, menu)
+                    time.sleep(3)
+                    break
+                else:
+                    spacecraft.update(coord_smooth[0], coord_smooth[1], coord_smooth[2], sp_imag, listAster.get_pos_list(), t.dt)
+                    last_coord = coord_smooth
+                    listAster.update(t.tg, t.dt)
+                    scoreboard.update(spacecraft.shield, t.tg)
+                    window.update(spacecraft, listAster, scoreboard, menu)
 
-            """
-            to-do:
-            -if condition finish game or escape
-                break
-
-            -if colision finish game
-            -init menu
-            -maybe: start game when wave hand or similar
-            -maybe: customize z coordinate filter -> smoother
-            """
-        delete_objects(spacecraft, explosion, listAster, scoreboard, list)
-        print("huaaaam")
-
-
-
-
+        print("GAME OVER") 
+        print("SCORE: ", scoreboard.score)
+        delete_objects([window, spacecraft, explosion, listAster, scoreboard, menu, list, t])
+    
 
 if __name__ == "__main__":
     main()

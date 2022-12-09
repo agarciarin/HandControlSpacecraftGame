@@ -1,6 +1,7 @@
-import utils.setup as sp
 import pygame.draw as pyd
 import pygame.font as fon
+
+import utils.setup as sp
 
 
 class Scoreboard:
@@ -17,7 +18,6 @@ class Scoreboard:
         fon.init()
         self.text = fon.SysFont('Comic Sans MS', 50, bold=True)
         self.text_surface = self.text.render('Score: '+str(self.score), True, self.color)
-
 
     def draw(self, win):
         pyd.circle(win, self.color_ol, self.pos_low, (self.width+self.width_ol)/2)

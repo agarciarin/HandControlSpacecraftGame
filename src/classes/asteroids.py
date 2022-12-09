@@ -1,8 +1,11 @@
-import utils.setup as sp
-from random import uniform, randint
-from pygame.transform import rotate, rotozoom
-from math import cos, sin, radians
+from math import cos, radians, sin
+from random import randint, uniform
+
 from numpy import array
+from pygame.transform import rotate, rotozoom
+
+import utils.setup as sp
+
 
 class Asteroid:
     def __init__(self, imag, commet): #(image, True=commet/Falsenot commet)
@@ -77,7 +80,7 @@ class ListAsteroids:
                 break
 
     def update(self, t, dt):
-        if t >= sp.ASTER_DT*self.n_c:
+        if (t >= sp.ASTER_DT*self.n_c):
             self.n_c += 1
             i = randint(0, len(self.imags)-1)
             self.insert_element( Asteroid(self.imags[i], i==0) ) #i=0 is a commet
