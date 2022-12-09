@@ -13,8 +13,9 @@ from classes.asteroids import ListAsteroids
 from classes.menu import Menu
 from classes.scoreboard import Scoreboard
 from classes.spacecraft import Spacecraft
-from classes.time import Counter, Time, Timer
+from classes.time import Time
 from classes.window import Window
+from classes.game import Game
 from hands_detection.hand_detection import ListCoord, hand_cap
 
 
@@ -44,59 +45,66 @@ def main():
         
         pygame.init() # Initializing PyGame
         clock = pygame.time.Clock()
-
-        #Load images
-        sp_imag, aster_imags, bg_imag, exp_imag = img.load_imag()
-        
-        window = Window(sp.WIN_WIDTH, sp.WIN_HEIGHT, bg_imag)
-        spacecraft = Spacecraft(0.5, 0.5, sp_imag)
-        explosion = Spacecraft(0.5, 0.5, exp_imag)
-        listAster = ListAsteroids(aster_imags)
-        scoreboard = Scoreboard()
         menu = Menu()
-        list = ListCoord(sp.N_FILTER)
-        t = Time(time.time())
+        game = Game()
 
-        #Game loop
+        #Main loop
         while not menu.exit_game:
-            events = pygame.event.get()
-            clock.tick(sp.FPS)
-            t.update(time.time(), menu.show)
+
+            #Load images and Objects
+            sp_imag, aster_imags, bg_imag, exp_imag = img.load_imag()
+            window = Window(sp.WIN_WIDTH, sp.WIN_HEIGHT, bg_imag)
+            spacecraft = Spacecraft(0.5, 0.5, sp_imag)
+            explosion = Spacecraft(0.5, 0.5, exp_imag)
+            listAster = ListAsteroids(aster_imags)
+            scoreboard = Scoreboard()
+            list = ListCoord(sp.N_FILTER)
+            t = Time(time.time())
+
+            #Game loop
+            while not menu.exit_game:
+                events = pygame.event.get()
+                clock.tick(sp.FPS)
+                t.update(time.time(), menu.show)
+                
+                #coord0 = hand_cap(cap, hands, mp_hands, mp_drawing_styles, mp_drawing)
+                ###BEGIN_ControlMouse
+                aux = pyautogui.position()
+                coord0 = array([1-aux[0]/1920, aux[1]/1080, -0.01])
+                ###EEND_ControlMouse
+
+                #Filter input
+                list.insert(coord0)
+                if list.n > list.n_max:
+                    list.pop_last_element()
+                coord_smooth = list.filter()
+
+                #Update
+                spacecraft.update(coord_smooth[0], coord_smooth[1], coord_smooth[2], sp_imag, listAster.get_pos_list(), t.dt)
+                window.update(spacecraft, listAster, scoreboard, menu)
+                menu.update(events, spacecraft.get_pos(), t.dt)
+
+                if not menu.show:
+                    if spacecraft.damaged:
+                        explosion.update(last_coord[0], last_coord[1], last_coord[2], exp_imag, [], 0)
+                        window.update(explosion, listAster, scoreboard, menu)
+                        time.sleep(1)
+                        menu.show = True
+                        break
+                    else:
+                        spacecraft.update(coord_smooth[0], coord_smooth[1], coord_smooth[2], sp_imag, listAster.get_pos_list(), t.dt)
+                        last_coord = coord_smooth
+                        listAster.update(t.tg, t.dt)
+                        scoreboard.update(spacecraft.shield, t.tg)
+                        window.update(spacecraft, listAster, scoreboard, menu)
             
-            coord0 = hand_cap(cap, hands, mp_hands, mp_drawing_styles, mp_drawing)
-            ###BEGIN_ControlMouse
-            aux = pyautogui.position()
-            #coord0 = array([1-aux[0]/1920, aux[1]/1080, -0.01])
-            ###EEND_ControlMouse
+            game.update()
+            game.print_game(scoreboard)
+            delete_objects([window, spacecraft, explosion, listAster, scoreboard, list, t, 
+                sp_imag, aster_imags, bg_imag, exp_imag])
 
-            #Filter input
-            list.insert(coord0)
-            if list.n > list.n_max:
-                list.pop_last_element()
-            coord_smooth = list.filter()
-
-            #Update
-            spacecraft.update(coord_smooth[0], coord_smooth[1], coord_smooth[2], sp_imag, listAster.get_pos_list(), t.dt)
-            window.update(spacecraft, listAster, scoreboard, menu)
-            menu.update(events, spacecraft.get_pos(), t.dt)
-
-            if not menu.show:
-                if spacecraft.damaged:
-                    explosion.update(last_coord[0], last_coord[1], last_coord[2], exp_imag, [], 0)
-                    window.update(explosion, listAster, scoreboard, menu)
-                    time.sleep(3)
-                    break
-                else:
-                    spacecraft.update(coord_smooth[0], coord_smooth[1], coord_smooth[2], sp_imag, listAster.get_pos_list(), t.dt)
-                    last_coord = coord_smooth
-                    listAster.update(t.tg, t.dt)
-                    scoreboard.update(spacecraft.shield, t.tg)
-                    window.update(spacecraft, listAster, scoreboard, menu)
-
-        print("GAME OVER") 
-        print("SCORE: ", scoreboard.score)
-        delete_objects([window, spacecraft, explosion, listAster, scoreboard, menu, list, t])
-    
+        game.print_games()
+        
 
 if __name__ == "__main__":
     main()

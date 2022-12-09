@@ -36,7 +36,7 @@ ASTER_ALPHA = 20 #(deg)
 ASTER_VROT_RANGE = 500 #(deg/s)
 
 #Asteroids List
-ASTER_DT = 0.6 #(s) time between creation of asteroids
+ASTER_DT = 1 #(s) time between creation of asteroids
 
 #Hitbox
 HITBOX_FACTOR = 0.7   # % ratio hitbox
