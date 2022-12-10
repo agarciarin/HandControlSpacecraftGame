@@ -11,8 +11,9 @@ class Spacecraft:
         self.w = sp.SPCRAFT_W0 * self.f
         self.h = sp.SPCRAFT_H0 * self.f
         self.x = (1-x)*sp.WIN_WIDTH
-        self.y = y*sp.WIN_HEIGHT
+        self.y = y*sp.WIN_HEIGHT*sp.SPCRAFT_Y_CORR
         self.z = 1
+        self.imag0 = imag 
         self.imag = imag 
         self.r = min(self.w/2, self.h/2) * sp.HITBOX_FACTOR
         self.shield = sp.SPCRAFT_SHIELD0
@@ -58,14 +59,14 @@ class Spacecraft:
         if self.shield <= sp.SPCRAFT_SHIELD0:
             self.shield += sp.SPCRAFT_REPAIR_FACTOR*dt
 
-    def update(self, x, y, z, imag, list_pos, dt):
+    def update(self, x, y, z, list_pos, dt):
         self.z = z
         self.f = abs((-(sp.SPCRAFT_F1-1)*z/0.7 + 1)*sp.SPCRAFT_F2)
         self.w = sp.SPCRAFT_W0 * self.f
         self.h = sp.SPCRAFT_H0 * self.f
         self.x = (1-x)*sp.WIN_WIDTH
-        self.y = y*sp.WIN_HEIGHT
-        self.imag = scale(imag, (self.w, self.h))
+        self.y = y*sp.WIN_HEIGHT*sp.SPCRAFT_Y_CORR
+        self.imag = scale(self.imag0, (self.w, self.h))
         self.r = max(self.w/2, self.h/2)
         self.damaged = (self.shield <= 0)
        

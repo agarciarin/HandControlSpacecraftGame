@@ -15,11 +15,12 @@ DT_HOLD = 2 #(s) PLAY/EXIT menu
 N_FILTER = 10           #Nº samples
 
 #Spacecraft
-SPCRAFT_W0 = 800    #(px)    
-SPCRAFT_H0 = 800    #(px)
-SPCRAFT_POS0 = array([0.8, 0.5, -0.1])
-SPCRAFT_F1 = 6     #Factor1 = max imag size
-SPCRAFT_F2 = 0.1   #Factor2 = avoid loss resolution
+SPCRAFT_W0 = 800        #(px)    
+SPCRAFT_H0 = 800        #(px)
+SPCRAFT_Y_CORR = 1.5    #[1-2] Hand margin detection
+SPCRAFT_POS0 = array([0.8, 0.5/SPCRAFT_Y_CORR, -0.1])
+SPCRAFT_F1 = 6          #Factor1 = max imag size
+SPCRAFT_F2 = 0.1        #Factor2 = avoid loss resolution
 SPCRAFT_SHIELD0 = 5
 SPCRAFT_DAMAGE_FACTOR = 1
 SPCRAFT_REPAIR_FACTOR = 0.05 #[0-SPCRAFT_DAMAGE_FACTOR)
@@ -39,5 +40,5 @@ ASTER_VROT_RANGE = 500  #(deg/s)
 ASTER_DT = 0.5          #(s) time between creation of asteroids
 
 #Hitbox
-HITBOX_FACTOR = 0.7     # % ratio hitbox
+HITBOX_FACTOR = 0.4     # % ratio hitbox
 HITBOX_COMMET = 0.2     # % ratio hitbox for commet 

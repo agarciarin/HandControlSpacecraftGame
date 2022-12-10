@@ -68,10 +68,10 @@ def main():
                 clock.tick(sp.FPS)
                 t.update(time.time(), menu.show)
                 
-                #coord0 = hand_cap(cap, hands, mp_hands, mp_drawing_styles, mp_drawing)
+                coord0 = hand_cap(cap, hands, mp_hands, mp_drawing_styles, mp_drawing)
                 ###BEGIN_ControlMouse
                 aux = pyautogui.position()
-                coord0 = array([1-aux[0]/1920, aux[1]/1080, -0.1])
+                #coord0 = array([1-aux[0]/1920, aux[1]/1080/sp.SPCRAFT_Y_CORR, -0.1])
                 ###EEND_ControlMouse
 
                 #Filter input
@@ -81,23 +81,21 @@ def main():
                 coord_smooth = list.filter()
 
                 #Update
-                spacecraft.update(coord_smooth[0], coord_smooth[1], coord_smooth[2], sp_imag, listAster.get_pos_list(), t.dt)
+                spacecraft.update(coord_smooth[0], coord_smooth[1], coord_smooth[2], listAster.get_pos_list(), t.dt)
                 window.update(spacecraft, listAster, scoreboard, menu)
                 menu.update(events, spacecraft.get_pos(), t.dt)
 
                 if not menu.show:
                     if spacecraft.damaged:
-                        explosion.update(last_coord[0], last_coord[1], last_coord[2], exp_imag, [], 0)
+                        explosion.update(last_coord[0], last_coord[1], last_coord[2], [], 0)
                         window.update(explosion, listAster, scoreboard, menu)
                         time.sleep(1)
                         menu.show = True
                         break
                     else:
-                        spacecraft.update(coord_smooth[0], coord_smooth[1], coord_smooth[2], sp_imag, listAster.get_pos_list(), t.dt)
                         last_coord = coord_smooth
                         listAster.update(t.tg, t.dt)
                         scoreboard.update(spacecraft.shield, t.tg)
-                        window.update(spacecraft, listAster, scoreboard, menu)
             
             game.update()
             game.print_game(scoreboard)
