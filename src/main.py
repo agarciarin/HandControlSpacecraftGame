@@ -70,7 +70,7 @@ def main():
                 
                 coord0 = hand_cap(cap, hands, mp_hands, mp_drawing_styles, mp_drawing)
                 ###BEGIN_ControlMouse
-                aux = pyautogui.position()
+                #aux = pyautogui.position()
                 #coord0 = array([1-aux[0]/1920, aux[1]/1080/sp.SPCRAFT_Y_CORR, -0.1])
                 ###EEND_ControlMouse
 

@@ -27,8 +27,9 @@ SPCRAFT_REPAIR_FACTOR = 0.05 #[0-SPCRAFT_DAMAGE_FACTOR)
 
 #Asteroids
 END_ASTER_LIFE = 500    #(px)
-ASTER_W0_H0 = 200       #(px)
-ASTER_F1 = 0.5          #(0-1] % of ASTER_W0_H0 = min/max value of images size
+COMMET_W0_H0 = 300      #(px)
+ASTER_W0_H0 = 100       #(px)
+ASTER_F1 = 0.3          #(0-1] % of ASTER_W0_H0 = min/max value of images size
 ASTER_X0 = 0.1          #[0.1 - 0.5] where asteroids appear
 ASTER_Y0 = 0.8          #[0.1 - 1] where asteroids appear
 ASTER_VEL_MIN = 200     #(px/s) 
@@ -37,7 +38,7 @@ ASTER_ALPHA = 15        #(deg)
 ASTER_VROT_RANGE = 500  #(deg/s)
 
 #Asteroids List
-ASTER_DT = 0.5          #(s) time between creation of asteroids
+ASTER_DT = 0.4          #(s) time between creation of asteroids
 
 #Hitbox
 HITBOX_FACTOR = 0.4     # % ratio hitbox
