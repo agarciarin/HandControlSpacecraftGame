@@ -16,7 +16,7 @@ class Scoreboard:
         self.width = 50
         self.width_ol = 10
         fon.init()
-        self.text = fon.SysFont('Comic Sans MS', 50, bold=True)
+        self.text = fon.SysFont('Calibri', 60, bold=True)
         self.text_surface = self.text.render('Score: '+str(self.score), True, self.color)
 
     def draw(self, win):

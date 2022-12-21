@@ -20,7 +20,7 @@ class Menu:
         self.width = 150
         self.width_ol = 30
         fon.init()
-        self.text = fon.SysFont('Comic Sans MS', 70, bold=True)
+        self.text = fon.SysFont('Calibri', 80, bold=True)
         self.text_surface_play = self.text.render('PLAY', True, self.color_text)
         self.text_surface_exit = self.text.render('EXIT', True, self.color_text)
         self.counter1 = Counter()

@@ -79,7 +79,7 @@ def main():
                 if list.n > list.n_max:
                     list.pop_last_element()
                 coord_smooth = list.filter()
-
+                        
                 #Update
                 spacecraft.update(coord_smooth[0], coord_smooth[1], coord_smooth[2], listAster.get_pos_list(), t.dt)
                 window.update(spacecraft, listAster, scoreboard, menu)
