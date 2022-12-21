@@ -4,12 +4,12 @@ from numpy import array
 #Define setup variables
 
 #Window
-WIN_WIDTH = 1800    #(px)
-WIN_HEIGHT = 900    #(px)
+WIN_WIDTH = 1920    #(px)
+WIN_HEIGHT = 1080    #(px)
 FPS = 60
 
 #Menu
-DT_HOLD = 2 #(s) PLAY/EXIT menu
+DT_HOLD = 1 #(s) PLAY/EXIT menu
 
 #Filtering camera input
 N_FILTER = 10           #Nº samples
@@ -22,7 +22,7 @@ SPCRAFT_POS0 = array([0.8, 0.5/SPCRAFT_Y_CORR, -0.1])
 SPCRAFT_F1 = 6          #Factor1 = max imag size
 SPCRAFT_F2 = 0.1        #Factor2 = avoid loss resolution
 SPCRAFT_SHIELD0 = 5
-SPCRAFT_DAMAGE_FACTOR = 1
+SPCRAFT_DAMAGE_FACTOR = 3
 SPCRAFT_REPAIR_FACTOR = 0.05 #[0-SPCRAFT_DAMAGE_FACTOR)
 
 #Asteroids
